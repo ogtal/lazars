@@ -1,21 +1,26 @@
 <template>
-  <!-- A nice main page for Lazars with some pretty graphics -->
-  <div class="flex flex-col items-center justify-center h-screen">
-    <div class="flex flex-col items-center justify-center">
-      <h1 class="text-4xl font-bold text-center">Welcome to Lazars</h1>
-      <h2 class="text-xl text-center">
-        Linguistic Analysis and Zero-bias Algorithmic Research Service
-      </h2>
-      <p class="mt-4 text-center">
-        A tool for creating forms and questionnaires
-      </p>
-    </div>
-    <div class="flex flex-col items-center justify-center mt-8">
-      <img src="/lazars.svg" alt="Lazars logo" class="w-64 h-64" />
+  <div class="flex justify-center p-8">
+    <div class="w-1/2">
+      <h1 class="text-4xl font-bold mb-4">Forms</h1>
+      <div class="grid gap-4">
+        <div
+          v-for="form in data?.response"
+          :key="form.id"
+          class="bg-white p-4 rounded-md shadow-md"
+        >
+          <router-link :to="`forms/${form.id}`">
+            <h2 class="text-xl">{{ form.id }}</h2>
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const { data } = await useFetch("/api/forms", {
+  method: "GET",
+});
+</script>
 
 <style></style>
