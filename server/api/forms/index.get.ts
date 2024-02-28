@@ -1,23 +1,10 @@
-import { DefaultAzureCredential } from "@azure/identity";
-import { CosmosClient } from "@azure/cosmos";
-
-const endpoint = process.env.COSMOS_ENDPOINT || "";
-const databaseName = `lazars`;
-const containerName = `forms`;
-
-export default defineEventHandler(async () => {
-  const cosmosClient = new CosmosClient({
-    endpoint,
-    aadCredentials: new DefaultAzureCredential(),
-  });
+export default defineEventHandler(async (event) => {
+  const client = event.context.cosmos;
+  const container = client.database("lazars").container("forms");
 
   const querySpec = {
     query: "select * from c",
   };
-
-  const container = await cosmosClient
-    .database(databaseName)
-    .container(containerName);
 
   const { resources } = await container.items.query(querySpec).fetchAll();
 

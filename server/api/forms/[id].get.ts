@@ -1,6 +1,3 @@
-import { DefaultAzureCredential } from "@azure/identity";
-import { CosmosClient } from "@azure/cosmos";
-
 interface Form {
   id: string;
   form: string;
@@ -11,21 +8,10 @@ interface APIResponse {
   error?: string;
 }
 
-const endpoint = process.env.COSMOS_ENDPOINT || "";
-const databaseName = `lazars`;
-const containerName = `forms`;
-
 export default defineEventHandler(async (event) => {
   const id = event.context.params?.id as string;
-
-  const cosmosClient = new CosmosClient({
-    endpoint,
-    aadCredentials: new DefaultAzureCredential(),
-  });
-
-  const container = await cosmosClient
-    .database(databaseName)
-    .container(containerName);
+  const client = event.context.cosmos;
+  const container = client.database("lazars").container("forms");
 
   try {
     const { resource } = await container.item(id, id).read();

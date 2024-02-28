@@ -1,7 +1,15 @@
-import * as path from "path";
-
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@kgierke/nuxt-basic-auth", "@vueuse/nuxt"],
+
+  runtimeConfig: {
+    cosmos: {
+      endpoint: "",
+      key: "",
+    },
+    openai: {
+      apiKey: "",
+    },
+  },
 
   vite: {
     vue: {
@@ -20,8 +28,8 @@ export default defineNuxtConfig({
     enabled: true,
     users: [
       {
-        username: process.env.BASIC_AUTH_USERNAME || "admin",
-        password: process.env.BASIC_AUTH_PASSWORD || "admin",
+        username: process.env.NUXT_BASIC_AUTH_PASSWORD || "admin",
+        password: process.env.NUXT_BASIC_AUTH_PASSWORD || "admin",
       },
     ],
   },
