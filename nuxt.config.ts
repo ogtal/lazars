@@ -7,7 +7,7 @@ export default defineNuxtConfig({
       key: "",
     },
     openai: {
-      apiKey: "",
+      key: "",
     },
   },
 
